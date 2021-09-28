@@ -14,7 +14,7 @@ initial = np.random.random(len(coefs))*max(abs(coefs))
 def F(x,lam = 0.001, order = 1, A=A,b=b):
     #given function to minimize
     F = 0
-    for i in range(1,len(b)):
+    for i in range(0,len(b)):
         F = F+1/2/len(b)*np.log(1+np.exp(-b[i]*np.dot(A[i],x)))
     F = F + np.linalg.norm(x, ord=order)
     return F
@@ -22,7 +22,7 @@ def F(x,lam = 0.001, order = 1, A=A,b=b):
 def sgF(x,A=A,b=b):
     #subgradient of given function
     F = 0
-    for i in range(1,len(b)):
+    for i in range(0,len(b)):
         F = F-1/2/len(b)*np.exp(-b[i]*np.dot(A[i],x))*A[i]*b[i]\
             /(1+np.exp(-b[i]*np.dot(A[i],x)))
         F = F + (x<0)*(-1)+(x>0)*(1)+(x==0)*0
@@ -65,16 +65,18 @@ def apply_sub_grad(initial,step_size=optimal_step,sg=sgF, coefs=coefs):
     x = initial
     sol = initial
     i = 1
-    while np.linalg.norm(F(x)-F(coefs))<1e-10:
-        eta = step_size(i)
+    while abs(F(x)-F(coefs))>1e-2:
+        eta = step_size(i,x)
         y = x - eta*sg(x)
         i+=1
-        errs.append(F(x)-F(coefs))
+        errs.append(F(y)-F(coefs))
+        print(F(y)-F(coefs))
+        print(F(y)-F(coefs))
         if F(y)<F(x):
             sol = y
         x = y
         
     return errs,sol
 
-(sol, errs)  = apply_sub_grad(initial)
+(errs,sol)  = apply_sub_grad(initial)
 plot(errs)
