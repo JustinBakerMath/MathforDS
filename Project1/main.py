@@ -41,15 +41,16 @@ def sgF(x,lam = 0.001, A=A,b=b):
         F = F + lam*((x<0)*(-1)+(x>0)*(1)+(x==0)*0)
     return F
 
-def optimal_step(t,x,coefs = coefs):
+def optimal_step(x,sg,F,coefs = coefs):
     #function to return the optimal step size w/ known soln
     #inputs: 
-        #t: current step
         #x: current x value
         #coefs: known optimal solution
+        #sg: subgradient
+        #F: function
     #ouputs:
         #eta: optimal step size
-    return (F(x)-F(coefs))/(np.linalg.norm(sgF(x))**2)
+    return (F(x)-F(coefs))/(np.linalg.norm(sg(x),ord=2))**2
     
 
 def plot(y):
@@ -79,10 +80,11 @@ def apply_sub_grad(initial,step_size=optimal_step,sg=sgF, coefs=coefs, F = F):
     sol = initial
     i = 1
     while abs(F(x)-F(coefs))>1e-2:
-        eta = step_size(i,x)
+        eta = step_size(x,sg,F)
         y = x - eta*sg(x)
         i+=1
         errs.append(F(y)-F(coefs))
+        print(F(y)-F(coefs))
         if F(y)<F(x):
             sol = y
         x = y
@@ -126,8 +128,9 @@ def apply_prox_grad(initial, reg = proxl1, step_size = 1/2, grad = gradf, f =f )
 ######################Applying all methods 
 initial = np.random.random(len(coefs))*max(abs(coefs))
 
-#(errs,sol)  = apply_sub_grad(initial, F = lambda x :F(x, lam=0.1), sgF = lambda x :sgF(x, lam=0.1))
-#plot(errs)
+(errs,sol)  = apply_sub_grad(initial, F = lambda x :F(x, lam=0.0001), sg= lambda x :sgF(x, lam=0.0001))
+#(errs,sol)  = apply_sub_grad(initial)
+plot(errs)
 
-(errsprox, solprox) = apply_prox_grad(initial)
-plot(errsprox)
+#(errsprox, solprox) = apply_prox_grad(initial)
+#plot(errsprox)
