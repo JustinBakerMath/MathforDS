@@ -9,7 +9,7 @@ def load_data(fname):
     with open(fname, 'rb') as f:
         data = np.load(f)['arr_0']
         
-    A,b = data[:-1,:], data[-1,:]
+    A , b = data[:-1,:], data[-1,:]
     
     return A.T,b
 

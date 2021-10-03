@@ -43,5 +43,6 @@ def sim_logistic_regression(coefs, n_samples=1000, corr=0.5):
 
 A, b = sim_logistic_regression(coefs)
 
+
 out = np.vstack((A.T,b))
 np.savez('./data/data', out)

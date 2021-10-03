@@ -1,29 +1,35 @@
 # -*- coding: utf-8 -*-
-
-import numpy as np
-from data import generator 
+# IMPORTS
 import matplotlib.pyplot as plt
+import numpy as np
 
+# SELF IMPORTS
+from data import generator 
+from lib.func import *
+from lib.opt import *
+from lib.utils import *
+from lib.vis import *
+
+
+# DATA
 A = generator.A
 b = generator.b
 coefs = generator.coefs
+init = np.random.random(50)
+lam = .001
 
-def f(x, A=A, b= b):
-    #given function (differentiable part)
-    F = 0
-    for i in range(0,len(b)):
-        F = F+1/2/len(b)*np.log(1+np.exp(-b[i]*np.dot(A[i],x)))
-    return F
+#GRADIENT DESCENT
+ittL2,nfeL2,dxL2 = desc(init, A, b)
+ittL1,nfeL1,dxL1 = desc(init, A, b, reg = LASSO)
 
-def gradf(x, A=A, b= b):
-    #given function (differentiable part)
-    F = 0
-    for i in range(0,len(b)):
-        F = F-1/2/len(b)*np.exp(-b[i]*np.dot(A[i],x))*A[i]*b[i]\
-            /(1+np.exp(-b[i]*np.dot(A[i],x)))
-    return F
+#PLOTTING
+ITT = [ittL1, ittL2]
+NFE = [nfeL1, nfeL2]
+DX = [dxL1, dxL2]
+comparison(ITT,NFE,DX)
 
 
+"""
 def F(x,lam = 0.001, order = 1, A=A,b=b):
     #given function to minimize
     F = 0
@@ -100,7 +106,7 @@ def proxl1(x,lam=0.001):
         #\psi_st(x;\lam)
      return (x+lam)*(x<=-lam)+(x-lam)*(x>=lam)
 
-def apply_prox_grad(initial, reg = proxl1, step_size = 1/2, grad = gradf, f =f ):
+def apply_prox_grad(initial, reg = proxl1, step_size = 1/2, grad = 0, f =0 ):
     #proximal gradient implementation for composite functions
     #inputs:
         #initial: initial vec
@@ -126,6 +132,7 @@ def apply_prox_grad(initial, reg = proxl1, step_size = 1/2, grad = gradf, f =f )
         
     return errs,sol
 ######################Applying all methods 
+
 initial = np.random.random(len(coefs))*max(abs(coefs))
 
 (errs,sol)  = apply_sub_grad(initial, F = lambda x :F(x, lam=0.0001), sg= lambda x :sgF(x, lam=0.0001))
@@ -134,3 +141,11 @@ plot(errs)
 
 #(errsprox, solprox) = apply_prox_grad(initial)
 #plot(errsprox)
+
+x = np.random.random(50)
+for i in range(10):
+    dF = gradLR(x,A,b)+gradL2(x)
+    x = gd(x,dF)
+    print(x)
+
+"""
