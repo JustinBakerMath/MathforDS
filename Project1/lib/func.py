@@ -21,6 +21,10 @@ def gradLR(x, A, b):
     return F
 
 # REGULARIZATION TERMS
+def zeroReg(x,lam):
+    """ No Regularization Term """
+    return np.zeros(len(x))
+
 def l2Reg(x,lam):
     """ L2 Regularization """
     return lam*np.linalg.norm(x,2)**2
@@ -29,7 +33,7 @@ def gradL2(x,lam):
     """ Gradient of L2 Regularization """
     return 2*lam*x
 
-def l1Reg(x):
+def l1Reg(x, lam):
     """ L1 Regularization """
     return lam*np.linalg.norm(x,1)
 

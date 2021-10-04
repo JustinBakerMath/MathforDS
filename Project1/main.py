@@ -10,6 +10,7 @@ from lib.opt import *
 from lib.utils import *
 from lib.vis import *
 
+np.random.seed(0)
 
 # DATA
 A = generator.A
@@ -19,14 +20,21 @@ init = np.random.random(50)
 lam = .001
 
 #GRADIENT DESCENT
-ittL2,nfeL2,dxL2 = desc(init, A, b)
+ittL2,nfeL2,dxL2 = desc(init, A, b, reg = l2Reg)
 ittL1,nfeL1,dxL1 = desc(init, A, b, reg = LASSO)
+#PROXIMAL GRADIENT
+ittL3,nfeL3,dxL3 = desc(init, A, b, method = prox)
+ittL4,nfeL4,dxL4 = desc(init, A, b, method = shrink)
+#ACCEL PROX
+ittL5,nfeL5,dxL5 = accel(init, A, b, method = accProx)
+ittL6,nfeL6,dxL6 = accel(init, A, b, method = accShrink)
 
 #PLOTTING
-ITT = [ittL1, ittL2]
-NFE = [nfeL1, nfeL2]
-DX = [dxL1, dxL2]
-comparison(ITT,NFE,DX)
+ITT = [ittL1, ittL2, ittL3, ittL4, ittL5, ittL6]
+NFE = [nfeL1, nfeL2, nfeL3, nfeL4, nfeL5, nfeL6]
+DX = [dxL1, dxL2, dxL3, dxL4, dxL5, dxL6]
+colors = ['k','k--','r','r--','b','b--']
+comparison(ITT,NFE,DX,6,colors)
 
 
 """
