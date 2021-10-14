@@ -8,7 +8,7 @@ def linReg(x, A, b):
     f(x) = 1/(2n)\sum log(1+exp(-b_i a_i' x)) """
     F = 0
     for i in range(len(b)):
-        F = F+np.log(1+np.exp(-b[i]*np.dot(A[i],x)))
+        F = F+np.log(1+np.exp(-b[i]*(A[i]@x)))
     return F/(2*len(b))
 
 def gradLR(x, A, b):
@@ -16,9 +16,9 @@ def gradLR(x, A, b):
     f(x) = 1/(2n)\sum [(-b_i)exp(-b_i a_i' x)a_i]/[1+exp(-b_i a_i' x)] """
     F = 0
     for i in range(0,len(b)):
-        F = F-1/2/len(b)*np.exp(-b[i]*np.dot(A[i],x))*A[i]*b[i]\
-            /(1+np.exp(-b[i]*np.dot(A[i],x)))
-    return F
+        F = F-b[i]*np.exp(-b[i]*(A[i]@x))*A[i]\
+            /(1+np.exp(-b[i]*(A[i]@x)))
+    return F/(2*len(b))
 
 # REGULARIZATION TERMS
 def zeroReg(x,lam):

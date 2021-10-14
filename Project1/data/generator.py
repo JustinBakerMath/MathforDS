@@ -6,8 +6,10 @@ import numpy as np
 from numpy.random import multivariate_normal
 from scipy.linalg.special_matrices import toeplitz
 
+np.random.seed(0)
+
 n_features = 50  # The dimension of the feature is set to 50
-n_samples = 1000 # Generate 1000 training data
+n_samples = 100 # Generate 1000 training data
 
 idx = np.arange(n_features)
 coefs = ((-1) ** idx) * np.exp(-idx/10.)
@@ -41,7 +43,7 @@ def sim_logistic_regression(coefs, n_samples=1000, corr=0.5):
     b = 2 * b - 1
     return A, b
 
-A, b = sim_logistic_regression(coefs)
+A, b = sim_logistic_regression(coefs, n_samples)
 
 
 out = np.vstack((A.T,b))

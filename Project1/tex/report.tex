@@ -1,1 +1,114 @@
-ECHO is on.
+\documentclass[11pt, answers]{exam}
+\usepackage[utf8]{inputenc}
+\usepackage{settings}
+% Title
+\title{Project 1: Report}
+\author{Justin Baker, Eric Brown, Trent DeGiovanni,\\ Edward Gu, Rebecca Hardenbrook}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+Consider training the following regularized logisti regression model
+$$\min_x F(x):= f(x)+\lambda R(x)$$
+where
+$$f(x)=\frac{1}{2n}\sum^n_{i=1}\log(1+\exp(-b_ia_i^Tx)),$$
+
+with $n$ being the sample size and $a_i\in\R^d$ ($d=50$) is the training data,
+$b_i\in\{-1,1\}$ be the label of $a_i$. 
+Here, we consider two different regularization functions 
+i.e. $\ell_1$-regularization ($R(x)=\lone{x}$) 
+and $\ell_2$-regularization ($R(x)=\ltwo{x}^2$).
+
+
+Please use the code in the zip file to genreate 1000 data-label pairs $\{a_i,b_i\}^{1000}_{i=1}.$
+
+\begin{questions}
+
+	\question Derive $\prox_{\lambda\lone{x}}$ and $\prox_{\lambda\ltwo{x}}$.
+
+	\begin{solution}
+
+		By definition
+		$$\prox_{\lambda h(x)}=\argmin_v\{h(v)+\frac{1}{2\lambda}\ltwo{x-v}^2\}$$
+		Let $h(x)=\lone{x}$
+		$$\prox_{\lambda \lone{x}}=\argmin_v\{\lone{v}+\frac{1}{2\lambda}\ltwo{x-v}^2\}$$
+
+		With insight we anticipate that the optimum of mixed $\ell_1-\ell_2$ norms is given by the soft-threshold or shrinkage operator.
+
+		For this problem we can use an extension of the optimality coniditons to subdifferentiable functions.
+
+		\begin{align*}
+		0\in \partial_v F &= \partial_v [\lone{v} +\frac{1}{2\lambda}\ltwo{v-x}^2]\\
+		0\in \partial_v F &= \partial_v \lone{v} +\frac{1}{2\lambda}\partial_v \ltwo{v-x}^2\\
+		0\in \partial_v F &= \partial_v \lone{v} +\frac{1}{2\lambda}\nabla \ltwo{v-x}^2\\
+		0&\in  \lambda \partial_v \lone{v} +v-x
+		\end{align*}
+
+		Now we consider the subdifferential for $\ell_1$ component wise.
+
+		$$\partial_v \lone{v} = \begin{cases} \sign{v_i} &\text{for }v_i\neq 0 \\
+				[-1,1] & \text{for } v_i=0\end{cases}$$
+
+		Analyzing both cases we have the following.
+
+		$$\begin{cases}0=v_i^*-x+\lambda\sign{v_i^*} & v_i\neq 0\\
+			0\in x+\lambda[-1,1] & v_i= 0
+		\end{cases}$$
+
+		Solving for the minimizer $v^*$ in terms of $x$.
+		$$\begin{cases}v_i^*=x-\lambda\sign{v_i^*} & v_i\neq 0\\
+			x\in\lambda[-1,1] & v_i= 0
+		\end{cases}$$
+
+		From the first condition we see that if $v_i^*\leq 0$ then $x\leq 0$ (notice that $\lambda>0$).
+		$$0>v^* = x+\lambda$$
+		Similarly for $v^*>0$ the $x>0$.
+		$$0<v^* = x-\lambda$$
+
+		Now using the fact that $x$ and $v^*$ have similar signs we may write the solution for $v^*$
+		exclusively in terms of $x$.
+		$$v_i = \begin{cases}0 & x\in [-\lambda, \lambda]\\
+			x-\lambda\sign{x} & \text{otherwise}
+		\end{cases}$$
+
+		This is exactly the shrinkage operator we anticipated to find.
+
+		\vspace{.5in}\hrule\vspace{.5in}
+
+		Now consider $\prox_{\lambda\ltwo{x}}{x}$
+
+		Again by definition
+
+		$$\prox_{\lambda h(x)}=\argmin_v\{h(v)+\frac{1}{2\lambda}\ltwo{x-v}^2\}$$
+		Let $h(x)=\ltwo{x}$
+		$$\prox_{\lambda \ltwo{x}}=\argmin_v\{\ltwo{v}+\frac{1}{2\lambda}\ltwo{x-v}^2\}$$
+
+		In this instance the function is differentiable everywhere.
+
+		\begin{align*}
+		0&= \nabla [\ltwo{v} +\frac{1}{2\lambda}\ltwo{v-x}^2]\\
+		0&= \nabla \ltwo{v} +\frac{1}{2\lambda}\nabla \ltwo{v-x}^2\\
+		0&= \frac{1}{2}v+\frac{1}{\lambda}v-x\\
+		(\frac{1}{2}+\lambda^{-1})v &= \lambda^{-1} x\\
+		v &= \frac{2}{2+\lambda}x
+		\end{align*}
+
+		Thus the optimal value si given by $v^* = \frac{2}{2+\lambda}x$.
+
+	\end{solution}
+	
+	\question For $\lambda=0.001$, numerically solve the problem $\min_xF(x)$ using subgradient method,
+	proximal gradient method, accelerated proximal gradient method with heavy-ball momentum and Nesterov's
+	acceleration.
+	Plot $F(x^k)-F(x^*)$ over the iteration $k$ for each method,
+	where $x^*$ is in the code that used to generate the training data.
+
+	\question Test different $\lambda$, e.g. $0.005,0.01,0.05,0.1$ and see how $x^k$ changes after you run enough number of iterations.
+
+	\question Can you propose any approach to further accelerate the training process?
+
+
+\end{questions}
+
+\end{document}

@@ -1,0 +1,76 @@
+% Document Specification
+\ProvidesPackage{settings}
+
+
+% Packages
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{blindtext}
+\usepackage[english]{babel}
+\usepackage{bm}
+\usepackage{caption}
+\usepackage{dsfont}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage[margin=1in]{geometry}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage[final]{pdfpages}
+\usepackage{subcaption}
+\usepackage{tikz-cd}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{xcolor}
+
+
+% Package Use Info
+\graphicspath{ {./images/} }
+\makeindex
+\usetikzlibrary{matrix,arrows}
+
+
+% Shortcuts and Functions. 
+\newcommand{\bp}{\begin{pmatrix}}
+\newcommand{\ep}{\end{pmatrix}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\prox}{\textit{prox}}
+\newcommand{\argmin}{\text{argmin}}
+\newcommand{\sign}[1]{\text{sign}(#1)}
+\newcommand{\lone}[1]{|| #1 ||_1}
+\newcommand{\ltwo}[1]{|| #1 ||_2}
+\newcommand{\mP}{\mathcal{P}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}{Corollary}[thm]
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+
+% Page Style Formatting
+
+% Title and Section Formatting
+\titleformat{\section}
+  {\large\scshape\center}{}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\scshape}{}{-.5em}{}
+\titleformat{\subsubsection}
+  {\normalfont\slshape\raggedright}{}{-.5em}{}
+  
+  
+% Display Mode Formatting
+\setlength\parindent{0pt}
+\allowdisplaybreaks
+  
+% Bibliography Formatting
+\usepackage[backend=bibtex,giveninits=true,sorting=nyt,style=alphabetic,natbib=true,maxcitenames=2,maxbibnames=10,url=false,doi=true,backref=false]{biblatex}
+\addbibresource{refs.bib}
+
