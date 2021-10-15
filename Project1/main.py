@@ -15,39 +15,48 @@ np.random.seed(0)
 # DATA
 A = generator.A
 b = generator.b
-opt = generator.coefs
-init = np.random.random(50)
-lam = .001
-eta = .01
 
+init = np.random.uniform(-.5,.5,50)
+itrs = 1000
+lam = .001
+eta = 1e-5
+
+lopt = generator.coefs
+f2 = linReg(lopt,A,b)+l2Reg(lopt,lam)
+f1 = linReg(lopt,A,b)+l1Reg(lopt,lam)
+
+print("Optimal Values")
+print(lopt)
 #SUB-GRADIENT
 print("Subgradient L2")
-dxL1 = desc(init, A, b, opt, lam=lam, eta=eta, reg=l2Reg)
+X1, dxL1 = desc(init, A, b, f1, lam=lam, eta=eta, reg=l2Reg, gradReg=gradl2, itrs=itrs)
 print("Subgradient L1")
-dxL2 = desc(init, A, b, opt, lam=lam, eta=eta, reg=LASSO)
+X2, dxL2 = desc(init, A, b, f2, lam=lam, eta=eta, reg=l1Reg, gradReg=gradl1, itrs=itrs)
 #PROX-GRADIENT
 print("Proximal gradient L2")
-dxL3 = desc(init, A, b, opt, lam=lam, eta=eta, method=prox)
+X3, dxL3 = desc(init, A, b, f1, lam=lam, eta=eta, method=prox, reg=l2Reg, itrs=itrs)
 print("Proximal gradient L1")
-dxL4 = desc(init, A, b, opt, lam=lam, eta=eta, method=shrink)
+X4, dxL4 = desc(init, A, b, f2, lam=lam, eta=eta, method=shrink, reg=l1Reg, itrs=itrs)
 #HBALL-PROX
 print("Heavyball proximal gradient L2")
-dxL5 = accel(init, A, b, opt, lam=lam, eta=eta, method=hbProx)
+X5, dxL5 = accel(init, A, b, f2, lam=lam, eta=eta, method=hbProx, reg=l2Reg, itrs=itrs)
 print("Heavyball proximal gradient L1")
-dxL6 = accel(init, A, b, opt, lam=lam, eta=eta, method=hbShrink)
+X6, dxL6 = accel(init, A, b, f1, lam=lam, eta=eta, method=hbShrink, reg=l1Reg, itrs=itrs)
 #NEST-PROX
 print("Nesterov proximal gradient L2")
-dxL7 = accel(init, A, b, opt, lam=lam, eta=eta, method=nestProx)
+X7, dxL7 = accel(init, A, b, f2, lam=lam, eta=eta, method=nestProx, reg=l2Reg, gradReg=gradl2, nesterov=True, itrs=itrs)
 print("Nesterov proximal gradient L1")
-dxL8 = accel(init, A, b, opt, lam=lam, eta=eta, method=nestShrink)
+X8, dxL8 = accel(init, A, b, f1, lam=lam, eta=eta, method=nestProx, reg=l1Reg, gradReg=gradl1, nesterov=True, itrs=itrs)
 #RESTART-NEST
 print("Adaptive restart Nesterov proximal gradient L2")
-dxL9 = accel(init, A, b, opt, lam=lam, eta=eta, method=nestProx, restart=True)
+X9, dxL9 = accel(init, A, b, f2, lam=lam, eta=eta, method=nestProx, reg=l2Reg, gradReg=gradl2, restart=True, nesterov=True, itrs=itrs)
 print("Adaptive restart Nesterov proximal gradient L1")
-dxL10 = accel(init, A, b, opt, lam=lam, eta=eta, method=nestShrink, restart=True)
+X10, dxL10 = accel(init, A, b, f1, lam=lam, eta=eta, method=nestProx, reg=l1Reg, gradReg=gradl1, restart=True, nesterov=True, itrs=itrs)
 
 #PLOTTING
+X = [X1, X2, X3, X4, X5, X6, X7, X8, X9, X10]
 DX = [dxL1, dxL2, dxL3, dxL4, dxL5, dxL6, dxL7, dxL8, dxL9, dxL10]
-np.savez('data/output', dxL1, dxL2, dxL3, dxL4, dxL5, dxL6, dxL7, dxL8, dxL9, dxL10)
+np.savez('data/x', X1, X2, X3, X4, X5, X6, X7, X8, X9, X10)
+np.savez('data/err', dxL1, dxL2, dxL3, dxL4, dxL5, dxL6, dxL7, dxL8, dxL9, dxL10)
 colors = ['k','k--','r','r--','b','b--', 'g', 'g--', 'm', 'm--']
-comparison(DX,colors)
+comparison(X,DX,colors)
