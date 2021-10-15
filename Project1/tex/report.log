@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.7.19)  15 OCT 2021 08:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.7.19)  15 OCT 2021 13:39
 entering extended mode
 **./report.tex
 (report.tex
@@ -1443,12 +1443,12 @@ Underfull \vbox (badness 4621) detected at line 262
 pdfTeX warning: pdflatex.exe (file ../out/01xl2.pdf): PDF inclusion: multiple p
 dfs with page group included in a single page
 >] [11 <../out/01xl1.pdf>]
-<../out/ARNAG.pdf, id=359, 462.52798pt x 346.89601pt>
+<../out/ARNAG.pdf, id=361, 462.52798pt x 346.89601pt>
 File: ../out/ARNAG.pdf Graphic file (type pdf)
 <use ../out/ARNAG.pdf>
 Package pdftex.def Info: ../out/ARNAG.pdf  used on input line 276.
 (pdftex.def)             Requested size: 323.61626pt x 242.72498pt.
-<../out/error.pdf, id=360, 462.52798pt x 346.89601pt>
+<../out/error.pdf, id=362, 462.52798pt x 346.89601pt>
 File: ../out/error.pdf Graphic file (type pdf)
 <use ../out/error.pdf>
 Package pdftex.def Info: ../out/error.pdf  used on input line 285.
@@ -1466,12 +1466,12 @@ File: ../out/001xl1.pdf Graphic file (type pdf)
 <use ../out/001xl1.pdf>
 Package pdftex.def Info: ../out/001xl1.pdf  used on input line 304.
 (pdftex.def)             Requested size: 352.31625pt x 264.25241pt.
-<../out/005xl2.pdf, id=436, 462.52798pt x 346.89601pt>
+<../out/005xl2.pdf, id=440, 462.52798pt x 346.89601pt>
 File: ../out/005xl2.pdf Graphic file (type pdf)
 <use ../out/005xl2.pdf>
 Package pdftex.def Info: ../out/005xl2.pdf  used on input line 308.
 (pdftex.def)             Requested size: 352.31625pt x 264.25241pt.
-<../out/005xl1.pdf, id=437, 462.52798pt x 346.89601pt>
+<../out/005xl1.pdf, id=441, 462.52798pt x 346.89601pt>
 File: ../out/005xl1.pdf Graphic file (type pdf)
 <use ../out/005xl1.pdf>
 Package pdftex.def Info: ../out/005xl1.pdf  used on input line 313.
@@ -1490,23 +1490,23 @@ Package pdftex.def Info: ../out/01xl1.pdf  used on input line 322.
 pdfTeX warning: pdflatex.exe (file ../out/005xl1.pdf): PDF inclusion: multiple 
 pdfs with page group included in a single page
 >]
-<../out/05xl2.pdf, id=521, 462.52798pt x 346.89601pt>
+<../out/05xl2.pdf, id=526, 462.52798pt x 346.89601pt>
 File: ../out/05xl2.pdf Graphic file (type pdf)
 <use ../out/05xl2.pdf>
 Package pdftex.def Info: ../out/05xl2.pdf  used on input line 326.
 (pdftex.def)             Requested size: 352.31625pt x 264.25241pt.
-<../out/05xl1.pdf, id=522, 462.52798pt x 346.89601pt>
+<../out/05xl1.pdf, id=527, 462.52798pt x 346.89601pt>
 File: ../out/05xl1.pdf Graphic file (type pdf)
 <use ../out/05xl1.pdf>
 Package pdftex.def Info: ../out/05xl1.pdf  used on input line 331.
 (pdftex.def)             Requested size: 352.31625pt x 264.25241pt.
  [16]
-<../out/xl2.pdf, id=530, 462.52798pt x 346.89601pt>
+<../out/xl2.pdf, id=535, 462.52798pt x 346.89601pt>
 File: ../out/xl2.pdf Graphic file (type pdf)
 <use ../out/xl2.pdf>
 Package pdftex.def Info: ../out/xl2.pdf  used on input line 335.
 (pdftex.def)             Requested size: 352.31625pt x 264.25241pt.
-<../out/xl1.pdf, id=531, 462.52798pt x 346.89601pt>
+<../out/xl1.pdf, id=536, 462.52798pt x 346.89601pt>
 File: ../out/xl1.pdf Graphic file (type pdf)
 <use ../out/xl1.pdf>
 Package pdftex.def Info: ../out/xl1.pdf  used on input line 340.
@@ -1531,7 +1531,7 @@ Package logreq Info: Writing requests to 'report.run.xml'.
 Here is how much of TeX's memory you used:
  34319 strings out of 478864
  637475 string characters out of 2858514
- 1189363 words of memory out of 3000000
+ 1189364 words of memory out of 3000000
  51638 multiletter control sequences out of 15000+600000
  414572 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1548,9 +1548,9 @@ ype1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/am
 sfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cm
 sy8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 >
-Output written on report.pdf (18 pages, 417656 bytes).
+Output written on report.pdf (18 pages, 429553 bytes).
 PDF statistics:
- 751 PDF objects out of 1000 (max. 8388607)
+ 758 PDF objects out of 1000 (max. 8388607)
  44 named destinations out of 1000 (max. 500000)
  101 words of extra memory for PDF output out of 10000 (max. 10000000)
 

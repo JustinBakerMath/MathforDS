@@ -16,17 +16,21 @@ np.random.seed(0)
 A = generator.A
 b = generator.b
 
-init = np.random.uniform(-.5,.5,50)
+init = np.random.uniform(-2,2,50)
 itrs = 1000
-lam = .001
+lam = 0.001
 eta = 1e-5
 
 lopt = generator.coefs
 f2 = linReg(lopt,A,b)+l2Reg(lopt,lam)
 f1 = linReg(lopt,A,b)+l1Reg(lopt,lam)
 
-print("Optimal Values")
-print(lopt)
+X9, dxL9 = accel(init, A, b, f2, lam=lam, eta=eta, method=nestProx, reg=l2Reg, gradReg=gradl2, restart=True, nesterov=True, itrs=itrs*5)
+X10, dxL10 = accel(init, A, b, f1, lam=lam, eta=eta, method=nestProx, reg=l1Reg, gradReg=gradl1, restart=True, nesterov=True, itrs=itrs*5)
+f2 = linReg(X9[-1],A,b)+l2Reg(X9[-1],lam)
+f1 = linReg(X10[-1],A,b)+l1Reg(X10[-1],lam)
+
+print("Generated Optimal Values")
 #SUB-GRADIENT
 print("Subgradient L2")
 X1, dxL1 = desc(init, A, b, f1, lam=lam, eta=eta, reg=l2Reg, gradReg=gradl2, itrs=itrs)

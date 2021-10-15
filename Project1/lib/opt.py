@@ -36,7 +36,7 @@ def nestShrink(x,x0,dF,t,theta=0,lam=.001,eta=.001):
     return LASSO(x-eta*dF, lam)
 
 #DESCENT METHODS
-def desc(init, A, b, fopt, method=sgd, reg=zeroReg, gradReg=zeroGrad, lam=.001, eta=.001, eps=1e-10, itrs=1000):
+def desc(init, A, b, fopt, method=sgd, reg=zeroReg, gradReg=zeroGrad, lam=.001, eta=.001, eps=1e-12, itrs=1000):
     x = init
     X = [init]
     df = [np.linalg.norm(linReg(x,A,b)+reg(x,lam)-fopt)]
