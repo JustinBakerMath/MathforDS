@@ -1,31 +1,39 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.spatial.distance import euclidean,cosine
 
-class KMeans:
-    def __init__(self,X,k):
-        self.X = X
-        self.k = k
+def orig(X,Y):
+    return np.linalg.norm(X-Y,axis=1)
 
-    def train(self,MAXITER = 100, TOL = 1e-3):
-        X = self.X
-        centroids = np.random.rand(self.k,X.shape[1])
-        centroidsold = centroids.copy()
-        for iter_ in range(MAXITER):
-            dist = np.linalg.norm(X - centroids[0,:],axis=1).reshape(-1,1)
-            for class_ in range(1,self.k):
-                dist = np.append(dist,np.linalg.norm(X - centroids[class_,:],axis=1).reshape(-1,1),axis=1)
-            classes = np.argmin(dist,axis=1)
-            # update position
-            for class_ in set(classes):
-                centroids[class_,:] = np.mean(X[classes == class_,:],axis=0)
-            if np.linalg.norm(centroids - centroidsold) < TOL:
-                break
-        self.centroids = centroids
-    
-    def predict(self):
-        X = self.X
-        dist = np.linalg.norm(X - self.centroids[0,:],axis=1).reshape(-1,1)
-        for class_ in range(1,self.k):
-            dist = np.append(dist,np.linalg.norm(X - self.centroids[class_,:],axis=1).reshape(-1,1),axis=1)
+def eucl(X,Y):
+    ret = []
+    for x in X:
+        ret = ret + [euclidean(x,Y)]
+    return np.array(ret).T
+
+def cos(X,Y):
+    ret = []
+    for x in X:
+        ret = ret + [cosine(x,Y)]
+    return np.array(ret).T
+
+
+def kmeans(X,k,distance=eucl,eps=1e-8,maxiters=100,seed=0):
+    np.random.seed(seed)
+    n,d = X.shape
+    cent = np.random.rand(k,d)
+    centk = cent.copy()
+    for i in range(maxiters):
+        dist = distance(X,cent[0,:]).reshape(-1,1)
+        for class_ in range(1,k):
+            dist = np.append(dist, distance(X,cent[class_,:]).reshape(-1,1), axis=1)
         classes = np.argmin(dist,axis=1)
-        return classes
+        for class_ in classes:
+            cent[class_,:] = np.mean(X[classes == class_,:],axis=0)
+        if np.linalg.norm(cent - centk) < eps:
+            print("Reached training criteria in {} iterations".format(i))
+            break
+        centk = cent.copy()
+
+    if i == maxiters: print("Reached max iterations")
+    return classes, cent, dist
