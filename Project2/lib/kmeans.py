@@ -2,8 +2,21 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.spatial.distance import euclidean,cosine
 
-def orig(X,Y):
-    return np.linalg.norm(X-Y,axis=1)
+def divergence(classes, true):
+    s = 0
+    for i,class_ in enumerate(classes):
+        if class_!=true[i]:
+            s = s+1
+    return s/len(classes)
+
+
+def measure(dist,classes):
+    s = 0
+    for i,d in enumerate(dist.T):
+        class_ = d[classes == i]
+        s = s+ sum(class_)
+    return s/len(classes)
+
 
 def eucl(X,Y):
     ret = []
